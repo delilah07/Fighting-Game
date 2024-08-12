@@ -30,6 +30,7 @@ class Sprite {
       offset,
     };
     this.isAttaking;
+    this.health = 100;
   }
   draw() {
     ctx.fillStyle = this.color;
@@ -143,10 +144,18 @@ function animate() {
   //detect collision
   if (rectangularCollision(player, enemy)) {
     player.isAttaking = false;
+    enemy.health--;
+    document.querySelector(
+      '.canvas__player2 span'
+    ).style.width = `${enemy.health}%`;
     console.log('player hits enemy');
   }
   if (rectangularCollision(enemy, player)) {
     enemy.isAttaking = false;
+    player.health--;
+    document.querySelector(
+      '.canvas__player1 span'
+    ).style.width = `${player.health}%`;
     console.log('enemy hits player');
   }
 }
@@ -186,7 +195,6 @@ window.addEventListener('keydown', (e) => {
       enemy.attack();
       break;
   }
-  console.log;
 });
 window.addEventListener('keyup', (e) => {
   switch (e.key) {
