@@ -68,6 +68,7 @@ class Sprite {
     }, 500);
   }
 }
+
 const player = new Sprite({
   position: {
     x: 0,
@@ -117,7 +118,33 @@ function rectangularCollision(obj1, obj2) {
     obj1.isAttaking
   );
 }
+function determineWinner({ player, enemy, timerId }) {
+  clearTimeout(timerId);
+  document.querySelector('.canvas__gameOver').style.display = 'block';
+  if (player.health === enemy.health) {
+    document.querySelector('.canvas__gameOver span').innerHTML = 'Tie';
+  } else if (player.health > enemy.health) {
+    document.querySelector('.canvas__gameOver span').innerHTML =
+      'Player 1 wins';
+  } else if (player.health < enemy.health) {
+    document.querySelector('.canvas__gameOver span').innerHTML =
+      'Player 2 wins';
+  }
+}
+let timer = 60;
+let timerId;
+function decreaseTimer() {
+  if (timer > 0) {
+    timerId = setTimeout(decreaseTimer, 1000);
+    timer--;
+    document.querySelector('.canvas__timer span').innerHTML = timer;
 
+    if (timer === 0) {
+      determineWinner({ player, enemy, timerId });
+    }
+  }
+}
+decreaseTimer();
 function animate() {
   window.requestAnimationFrame(animate);
   ctx.fillStyle = 'black';
@@ -144,7 +171,7 @@ function animate() {
   //detect collision
   if (rectangularCollision(player, enemy)) {
     player.isAttaking = false;
-    enemy.health--;
+    enemy.health -= 10;
     document.querySelector(
       '.canvas__player2 span'
     ).style.width = `${enemy.health}%`;
@@ -152,11 +179,16 @@ function animate() {
   }
   if (rectangularCollision(enemy, player)) {
     enemy.isAttaking = false;
-    player.health--;
+    player.health -= 10;
     document.querySelector(
       '.canvas__player1 span'
     ).style.width = `${player.health}%`;
     console.log('enemy hits player');
+  }
+
+  //end game
+  if (enemy.health <= 0 || player.health <= 0) {
+    determineWinner({ player, enemy, timerId });
   }
 }
 
