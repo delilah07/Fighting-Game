@@ -6,16 +6,49 @@ canvas.height = 576;
 
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+const gravity = 0.2;
+
 class Sprite {
-  constructor(position) {
+  constructor({ position, velocity, height = 150 }) {
     this.position = position;
+    this.velocity = velocity;
+    this.height = height;
   }
   draw() {
-    ctx.fillRect(this.position.x, this.position.y, 50, 150);
+    ctx.fillStyle = 'red';
+    ctx.fillRect(this.position.x, this.position.y, 50, this.height);
+  }
+  update() {
+    this.draw();
+    this.position.y += this.velocity.y;
+
+    this.position.y + this.height + this.velocity.y >= canvas.height
+      ? (this.velocity.y = 0)
+      : (this.velocity.y += gravity);
   }
 }
 const player = new Sprite({
-  x: 0,
-  y: 0,
+  position: {
+    x: 0,
+    y: 0,
+  },
+  velocity: { x: 0, y: 10 },
 });
-console.log(player);
+
+const enemy = new Sprite({
+  position: {
+    x: 400,
+    y: 100,
+  },
+  velocity: { x: 0, y: 0 },
+});
+
+function animate() {
+  window.requestAnimationFrame(animate);
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  player.update();
+  enemy.update();
+}
+
+animate();
