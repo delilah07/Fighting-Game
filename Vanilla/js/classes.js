@@ -98,21 +98,6 @@ export class Fighter extends Sprite {
       sprites[sprite].image.src = sprites[sprite].imageSrc;
     }
   }
-  //   draw() {
-  //     ctx.fillStyle = this.color;
-  //     ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-
-  //     //attack box
-  //     if (this.isAttaking) {
-  //       ctx.fillStyle = 'green';
-  //       ctx.fillRect(
-  //         this.attackBox.position.x,
-  //         this.attackBox.position.y,
-  //         this.attackBox.width,
-  //         this.attackBox.height
-  //       );
-  //     }
-  //   }
   update() {
     this.draw();
     this.animFrames();
@@ -131,12 +116,18 @@ export class Fighter extends Sprite {
   }
 
   attack() {
+    this.swithSprite('attack1');
     this.isAttaking = true;
     setTimeout(() => {
       this.isAttaking = false;
-    }, 200);
+    }, 500);
   }
   swithSprite(sprite) {
+    if (
+      this.image === this.sprites.attack1.image &&
+      this.frameCurrent < this.sprites.attack1.framesMax - 1
+    )
+      return;
     switch (sprite) {
       case 'idle':
         if (this.image !== this.sprites.idle.image) {
@@ -163,6 +154,13 @@ export class Fighter extends Sprite {
         if (this.image !== this.sprites.fall.image) {
           this.image = this.sprites.fall.image;
           this.framesMax = this.sprites.fall.framesMax;
+          this.frameCurrent = 0;
+        }
+        break;
+      case 'attack1':
+        if (this.image !== this.sprites.attack1.image) {
+          this.image = this.sprites.attack1.image;
+          this.framesMax = this.sprites.attack1.framesMax;
           this.frameCurrent = 0;
         }
         break;
