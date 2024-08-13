@@ -66,6 +66,7 @@ export class Fighter extends Sprite {
     framesElapsed = 0,
     frameHold = 7,
     offset = { x: 0, y: 0 },
+    sprites,
   }) {
     super({
       position,
@@ -90,6 +91,12 @@ export class Fighter extends Sprite {
     };
     this.isAttaking;
     this.health = 100;
+    this.sprites = sprites;
+
+    for (const sprite in sprites) {
+      sprites[sprite].image = new Image();
+      sprites[sprite].image.src = sprites[sprite].imageSrc;
+    }
   }
   //   draw() {
   //     ctx.fillStyle = this.color;
