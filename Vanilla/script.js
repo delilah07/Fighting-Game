@@ -3,6 +3,7 @@ import {
   rectangularCollision,
   determineWinner,
   decreaseTimer,
+  timerId,
 } from './js/utility.js';
 
 export const canvas = document.querySelector('canvas');
@@ -68,6 +69,14 @@ export const player = new Fighter({
       framesMax: 6,
     },
   },
+  attackBox: {
+    offset: {
+      x: 95,
+      y: 50,
+    },
+    width: 160,
+    height: 50,
+  },
 });
 
 export const enemy = new Fighter({
@@ -105,6 +114,14 @@ export const enemy = new Fighter({
       imageSrc: '../assets/kenji/Attack1.png',
       framesMax: 4,
     },
+  },
+  attackBox: {
+    offset: {
+      x: -170,
+      y: 50,
+    },
+    width: 160,
+    height: 50,
   },
 });
 
@@ -181,7 +198,7 @@ function animate() {
   }
 
   //detect collision
-  if (rectangularCollision(player, enemy)) {
+  if (rectangularCollision(player, enemy) && player.frameCurrent === 4) {
     player.isAttaking = false;
     enemy.health -= 10;
     document.querySelector(
@@ -189,7 +206,9 @@ function animate() {
     ).style.width = `${enemy.health}%`;
     console.log('player hits enemy');
   }
-  if (rectangularCollision(enemy, player)) {
+  if (player.isAttaking && player.frameCurrent === 4) player.isAttaking = false;
+
+  if (rectangularCollision(enemy, player) && enemy.frameCurrent === 2) {
     enemy.isAttaking = false;
     player.health -= 10;
     document.querySelector(
@@ -197,6 +216,7 @@ function animate() {
     ).style.width = `${player.health}%`;
     console.log('enemy hits player');
   }
+  if (enemy.isAttaking && enemy.frameCurrent === 2) enemy.isAttaking = false;
 
   //end game
   if (enemy.health <= 0 || player.health <= 0) {

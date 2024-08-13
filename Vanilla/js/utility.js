@@ -22,7 +22,7 @@ export function determineWinner({ player, enemy, timerId }) {
   }
 }
 let timer = 60;
-let timerId;
+export let timerId;
 export function decreaseTimer() {
   if (timer > 0) {
     timerId = setTimeout(decreaseTimer, 1000);

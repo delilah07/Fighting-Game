@@ -67,6 +67,7 @@ export class Fighter extends Sprite {
     frameHold = 7,
     offset = { x: 0, y: 0 },
     sprites,
+    attackBox = { offset: {}, width: undefined, height: undefined },
   }) {
     super({
       position,
@@ -85,9 +86,9 @@ export class Fighter extends Sprite {
     this.lastKey;
     this.attackBox = {
       position: { x: this.position.x, y: this.position.y },
-      width: 100,
-      height: 50,
-      offset,
+      width: attackBox.width,
+      height: attackBox.height,
+      offset: attackBox.offset,
     };
     this.isAttaking;
     this.health = 100;
@@ -102,8 +103,9 @@ export class Fighter extends Sprite {
     this.draw();
     this.animFrames();
 
+    // attack Box
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
-    this.attackBox.position.y = this.position.y;
+    this.attackBox.position.y = this.position.y + this.attackBox.offset.y;
 
     this.position.x += this.velocity.x;
 
@@ -118,9 +120,9 @@ export class Fighter extends Sprite {
   attack() {
     this.swithSprite('attack1');
     this.isAttaking = true;
-    setTimeout(() => {
-      this.isAttaking = false;
-    }, 500);
+    // setTimeout(() => {
+    //   this.isAttaking = false;
+    // }, 500);
   }
   swithSprite(sprite) {
     if (
