@@ -39,7 +39,6 @@ export const player = new Fighter({
     y: 0,
   },
   velocity: { x: 0, y: 10 },
-  offset: { x: 0, y: 0 },
   imageSrc: '../assets/samuraiMack/Idle.png',
   framesMax: 8,
   scale: 2.5,
@@ -78,7 +77,35 @@ export const enemy = new Fighter({
   },
   velocity: { x: 0, y: 0 },
   color: 'blue',
-  offset: { x: -50, y: 0 },
+  imageSrc: '../assets/kenji/Idle.png',
+  framesMax: 4,
+  scale: 2.5,
+  offset: {
+    x: 215,
+    y: 167,
+  },
+  sprites: {
+    idle: {
+      imageSrc: '../assets/kenji/Idle.png',
+      framesMax: 4,
+    },
+    run: {
+      imageSrc: '../assets/kenji/Run.png',
+      framesMax: 8,
+    },
+    jump: {
+      imageSrc: '../assets/kenji/Jump.png',
+      framesMax: 2,
+    },
+    fall: {
+      imageSrc: '../assets/kenji/Fall.png',
+      framesMax: 2,
+    },
+    attack1: {
+      imageSrc: '../assets/kenji/Attack1.png',
+      framesMax: 4,
+    },
+  },
 });
 
 const keys = {
@@ -113,7 +140,7 @@ function animate() {
   shop.update();
 
   player.update();
-  // enemy.update();
+  enemy.update();
 
   // player movements
 
@@ -128,7 +155,7 @@ function animate() {
     player.swithSprite('idle');
   }
 
-  //jump
+  // player jump
   if (player.velocity.y < 0) {
     player.swithSprite('jump');
   } else if (player.velocity.y > 0) {
@@ -139,8 +166,18 @@ function animate() {
   enemy.velocity.x = 0;
   if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
     enemy.velocity.x -= 5;
+    enemy.swithSprite('run');
   } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
     enemy.velocity.x += 5;
+    enemy.swithSprite('run');
+  } else {
+    enemy.swithSprite('idle');
+  }
+  //enemy jump
+  if (enemy.velocity.y < 0) {
+    enemy.swithSprite('jump');
+  } else if (enemy.velocity.y > 0) {
+    enemy.swithSprite('fall');
   }
 
   //detect collision
