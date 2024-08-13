@@ -1,19 +1,40 @@
 import { canvas, ctx, gravity } from '../script.js';
 
 export class Sprite {
-  constructor({ position, width = 50, height = 150, imageSrc }) {
+  constructor({ position, imageSrc, scale = 1, framesMax = 1 }) {
     this.position = position;
-    // this.width = width;
-    // this.height = height;
+    this.width = 50;
+    this.height = 150;
     this.image = new Image();
     this.image.src = imageSrc;
+    this.scale = scale;
+    this.framesMax = framesMax;
+    this.frameCurrent = 0;
+    this.framesElapsed = 0;
+    this.frameHold = 7;
   }
   draw() {
-    ctx.drawImage(this.image, this.position.x, this.position.y);
-    ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+    ctx.drawImage(
+      this.image,
+      this.frameCurrent * (this.image.width / this.framesMax),
+      0,
+      this.image.width / this.framesMax,
+      this.image.height,
+      this.position.x,
+      this.position.y,
+      (this.image.width / this.framesMax) * this.scale,
+      this.image.height * this.scale
+    );
   }
   update() {
     this.draw();
+    this.framesElapsed++;
+
+    if (this.framesElapsed % this.frameHold === 0) {
+      this.frameCurrent < this.framesMax - 1
+        ? this.frameCurrent++
+        : (this.frameCurrent = 0);
+    }
   }
 }
 
