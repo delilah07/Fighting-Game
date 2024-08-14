@@ -217,18 +217,19 @@ function animate() {
   if (rectangularCollision(player, enemy) && player.frameCurrent === 4) {
     enemy.takeHit();
     player.isAttaking = false;
-    document.querySelector(
-      '.canvas__player2 span'
-    ).style.width = `${enemy.health}%`;
+    gsap.to('.canvas__player2 span', {
+      width: enemy.health + '%',
+    });
   }
   if (player.isAttaking && player.frameCurrent === 4) player.isAttaking = false;
 
   if (rectangularCollision(enemy, player) && enemy.frameCurrent === 2) {
     player.takeHit();
     enemy.isAttaking = false;
-    document.querySelector(
-      '.canvas__player1 span'
-    ).style.width = `${player.health}%`;
+
+    gsap.to('.canvas__player1 span', {
+      width: player.health + '%',
+    });
   }
   if (enemy.isAttaking && enemy.frameCurrent === 2) enemy.isAttaking = false;
 

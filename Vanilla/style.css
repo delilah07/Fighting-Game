@@ -32,40 +32,46 @@
   height: 100%;
 }
 .canvas__player1 {
-  border-color: yellow;
+  border-color: #cd2038;
   justify-content: flex-end;
 }
 .canvas__player1 span {
-  background-color: yellow;
+  background-color: #cd2038;
 }
 .canvas__player2 {
-  border-color: green;
+  border-color: #333892;
 }
 .canvas__player2 span {
-  background-color: green;
+  background-color: #333892;
 }
 .canvas__timer {
-  background-color: red;
+  background-color: #5d533e;
   height: 100px;
   width: 100px;
   border-radius: 15px;
-  border: 5px solid red;
+  font-family: 'Jacquard 12', system-ui;
+  font-optical-sizing: auto;
+  font-style: normal;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
-  color: #fff;
-  font-family: sans-serif;
-  font-weight: 900;
+  font-size: 5rem;
+  color: #b8a57f;
+  font-weight: 500;
+}
+.canvas__timer span {
+  margin: 0 0 1rem 0;
+  filter: blur(0.5px);
 }
 .canvas__gameOver {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 4rem;
+  font-size: 7rem;
   color: #fff;
-  font-family: sans-serif;
+  font-family: 'Jacquard 12', system-ui;
   font-weight: 900;
   display: none;
+  white-space: nowrap;
 }
