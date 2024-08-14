@@ -124,12 +124,25 @@ export class Fighter extends Sprite {
     //   this.isAttaking = false;
     // }, 500);
   }
+  takeHit() {
+    this.swithSprite('takeHit');
+    this.health -= 10;
+  }
   swithSprite(sprite) {
+    // overriding all other animation with the attack animation
     if (
       this.image === this.sprites.attack1.image &&
       this.frameCurrent < this.sprites.attack1.framesMax - 1
     )
       return;
+
+    // overriding all other animation with the hit animation
+    if (
+      this.image === this.sprites.takeHit.image &&
+      this.frameCurrent < this.sprites.takeHit.framesMax - 1
+    )
+      return;
+
     switch (sprite) {
       case 'idle':
         if (this.image !== this.sprites.idle.image) {
@@ -166,7 +179,14 @@ export class Fighter extends Sprite {
           this.frameCurrent = 0;
         }
         break;
+
+      case 'takeHit':
+        if (this.image !== this.sprites.takeHit.image) {
+          this.image = this.sprites.takeHit.image;
+          this.framesMax = this.sprites.takeHit.framesMax;
+          this.frameCurrent = 0;
+        }
+        break;
     }
   }
 }
-// check commit
