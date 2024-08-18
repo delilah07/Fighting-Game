@@ -36,7 +36,7 @@ const shop = new Sprite({
 
 export const player = new Fighter({
   position: {
-    x: 0,
+    x: canvas.width / 8 - 25,
     y: 0,
   },
   velocity: { x: 0, y: 10 },
@@ -89,7 +89,7 @@ export const player = new Fighter({
 
 export const enemy = new Fighter({
   position: {
-    x: 400,
+    x: (7 * canvas.width) / 8 - 25,
     y: 100,
   },
   velocity: { x: 0, y: 0 },
